@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LFG - Find your event</title>
+</head>
+
+<body>
+    <div><h1>Looking for Group</h1></div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>Content</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each=" meeting : ${meetings}">
+                    <td th:text="${meeting.title}"></td>
+                    <td th:text="${meeting.category != null ? meeting.category.catName : ''}"></td>
+                    <td th:text="${meeting.location}"></td>
+                    <td th:text="${meeting.date}"></td>
+                    <td th:text="${meeting.content}"></td>
+                </tr>
+                </tbody>
+        </table>
+    </div>
+</body>
+</html>

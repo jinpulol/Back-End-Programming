@@ -1,6 +1,10 @@
 package sof03.lfg.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -71,6 +75,11 @@ public class Meeting {
         return date;
     }
 
+    public String getDateString() {
+        Locale fi = new Locale("fi", "FI");
+        return new SimpleDateFormat("dd.MM.yyyy", fi).format(date);
+    }
+
     public void setDate(Date date) {
         this.date = date;
     }
@@ -83,7 +92,7 @@ public class Meeting {
         this.content = content;
     }
 
-    public Category category() {
+    public Category getCategory() {
         return category;
     }
 

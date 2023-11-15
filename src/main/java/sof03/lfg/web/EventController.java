@@ -11,7 +11,6 @@ import sof03.lfg.domain.CategoryRepository;
 import sof03.lfg.domain.Meeting;
 import sof03.lfg.domain.MeetingRepository;
 
-
 // Controller for meetings
 @Controller
 public class EventController {
@@ -22,7 +21,7 @@ public class EventController {
 
     @Autowired
     private CategoryRepository categoryRepository;
-    
+
     // Index page
     @GetMapping("/")
     public String index() {
@@ -46,21 +45,21 @@ public class EventController {
     }
 
     // Save new meeting
-    @PostMapping("/save")
+    @PostMapping("/savemeeting")
     public String saveMeeting(Meeting meeting) {
         meetingRepository.save(meeting);
         return "redirect:events";
     }
 
     // Delete meeting
-    @GetMapping("/delete/{id}")
+    @GetMapping("/deletemeeting/{id}")
     public String deleteMeeting(@PathVariable("id") Long meetingId, Model model) {
         meetingRepository.deleteById(meetingId);
         return "redirect:../events";
     }
 
     // Edit meeting
-    @GetMapping("/edit/{id}")
+    @GetMapping("/editmeeting/{id}")
     public String editMeeting(@PathVariable("id") Long meetingId, Model model) {
         model.addAttribute("meeting", meetingRepository.findById(meetingId));
         model.addAttribute("categories", categoryRepository.findAll());

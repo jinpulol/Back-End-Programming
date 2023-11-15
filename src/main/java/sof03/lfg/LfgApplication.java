@@ -15,7 +15,7 @@ import sof03.lfg.domain.Meeting;
 import sof03.lfg.domain.MeetingRepository;
 
 @SpringBootApplication
-public class LfgApplication {	// LFG = Looking For Group
+public class LfgApplication { // LFG = Looking For Group
 
 	private static final Logger log = LoggerFactory.getLogger(LfgApplication.class);
 
@@ -45,10 +45,14 @@ public class LfgApplication {	// LFG = Looking For Group
 
 			// Adding a few meetings
 			log.info("Save a few meetings");
-			Meeting meeting1 = new Meeting("Kävelyretki", "Espoo", time.parse("01.01.2024"), "Kävelyretki Nuuksiossa", cat2);
-			Meeting meeting2 = new Meeting("Elokuvailta", "Helsinki", time.parse("04.02.2024"), "Elokuvailta Tennispalatsissa", cat1);
-			Meeting meeting3 = new Meeting("Kahvittelua", "Jyväskylä", time.parse("05.03.2024"), "Kahvia ja juttelua yliopiston kahvilassa", cat3);
-			Meeting meeting4 = new Meeting("Lautapelailua", "Tampere", time.parse("16.02.2024"), "Dungeon & Dragons -peliä ja herkuttelua", cat4);
+			Meeting meeting1 = new Meeting("Kävelyretki", "Espoo", time.parse("01.01.2024"), "Kävelyretki Nuuksiossa",
+					cat2);
+			Meeting meeting2 = new Meeting("Elokuvailta", "Helsinki", time.parse("04.02.2024"),
+					"Elokuvailta Tennispalatsissa", cat1);
+			Meeting meeting3 = new Meeting("Kahvittelua", "Jyväskylä", time.parse("05.03.2024"),
+					"Kahvia ja juttelua yliopiston kahvilassa", cat3);
+			Meeting meeting4 = new Meeting("Lautapelailua", "Tampere", time.parse("16.02.2024"),
+					"Dungeon & Dragons -peliä ja herkuttelua", cat4);
 
 			meetingRepository.save(meeting1);
 			meetingRepository.save(meeting2);
@@ -57,16 +61,15 @@ public class LfgApplication {	// LFG = Looking For Group
 
 			// Fetch all categories
 			log.info("Fetch all categories");
-			for(Category category : categoryRepository.findAll()) {
+			for (Category category : categoryRepository.findAll()) {
 				log.info(category.toString());
 			}
 
 			// Fetch all meetings
 			log.info("Fetch all meetings");
-			for(Meeting meeting : meetingRepository.findAll()) {
+			for (Meeting meeting : meetingRepository.findAll()) {
 				log.info(meeting.toString());
 			}
-
 
 		};
 	}

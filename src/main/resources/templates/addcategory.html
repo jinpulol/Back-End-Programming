@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <title>LFG - Add new category</title>
+</head>
+
+<body>
+    <div>
+        <h2>Add new category</h2>
+        <div>
+            <form th:object="${category}" th:action="@{/addcategory}" method="post">
+                <div>
+                    <label for="catName">Category name</label>
+                    <input type="text" th:field="*{catName}" />
+                </div>
+                <div>
+                    <input type="submit" value="Add" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

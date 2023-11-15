@@ -4,11 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LFG - Find your event</title>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <title>LFG - All events</title>
 </head>
 
 <body>
-    <div><h1>Looking for Group</h1></div>
+    <div>
+        <h1>Looking for Group</h1>
+    </div>
+    <div>
+        <td>
+            <a href="/add">Create new meeting</a>
+        </td>
+    </div>
     <div>
         <table>
             <thead>
@@ -25,11 +33,14 @@
                     <td th:text="${meeting.title}"></td>
                     <td th:text="${meeting.category != null ? meeting.category.catName : ''}"></td>
                     <td th:text="${meeting.location}"></td>
-                    <td th:text="${meeting.date}"></td>
+                    <td th:text="${meeting.getDateString}"></td>
                     <td th:text="${meeting.content}"></td>
+                    <td><a th:href="@{/editmeeting/{id}(id=${meeting.meetingId})}">Edit</a></td>
+                    <td><a th:href="@{/deletemeeting/{id}(id=${meeting.meetingId})}">Delete</a></td>
                 </tr>
-                </tbody>
+            </tbody>
         </table>
     </div>
 </body>
+
 </html>

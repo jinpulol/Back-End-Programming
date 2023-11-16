@@ -30,6 +30,7 @@ public class WebSecurityConfig {
                 .requestMatchers(antMatcher("/css/**")).permitAll() // Enable css when logged out
                 .requestMatchers(antMatcher("/")).permitAll() // Allow access to index page without authentication
                  .requestMatchers(antMatcher("/register")).permitAll() // Allow access to register page without authentication
+                 .requestMatchers(antMatcher("/events")).permitAll() // Allow access to events page without authentication")))
                 .anyRequest().authenticated())
             .formLogin(formLogin -> formLogin
                 .loginPage("/login")

@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.validation.Valid;
 import sof03.lfg.domain.CategoryRepository;
@@ -122,17 +119,5 @@ public class EventController {
     //     meetingRepository.save(meeting);
     //     return "redirect:/events";
     // }
-
-    // RESTful service to get all meetings
-    @RequestMapping(value = "/meetings", method = RequestMethod.GET)
-    public @ResponseBody List<Meeting> meetingListRest() {
-        return (List<Meeting>) meetingRepository.findAll();
-    }
-
-    // RESTful service to get meeting by id
-    @RequestMapping(value = "/meetings/{id}", method = RequestMethod.GET)
-    public @ResponseBody Optional<Meeting> findMeetingRest(@PathVariable("id") Long meetingId) {
-        return meetingRepository.findById(meetingId);
-    }
 
 }

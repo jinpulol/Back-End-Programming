@@ -10,11 +10,18 @@
 
 <body>
     <div>
+        <p th:inline="text">Logged in as: <span sec:authentication="name"></span></p>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Logout" class="btn btn-sm btn-danger" />
+    </div>
+    <div>
         <h1>Looking for Group</h1>
     </div>
     <div>
         <td>
-            <a href="/add">Create new meeting</a>
+            <a href="/add" class="btn btn-sm btn-primary">Create new meeting</a>
+            <a sec:authorize="hasAuthority('ADMIN')" a href="/addcategory" class="btn btn-sm btn-info">Add New Category</a>
+
         </td>
     </div>
     <div>
@@ -35,8 +42,28 @@
                     <td th:text="${meeting.location}"></td>
                     <td th:text="${meeting.getDateString}"></td>
                     <td th:text="${meeting.content}"></td>
-                    <td><a th:href="@{/editmeeting/{id}(id=${meeting.meetingId})}">Edit</a></td>
-                    <td><a th:href="@{/deletemeeting/{id}(id=${meeting.meetingId})}">Delete</a></td>
+                    <td>
+                        <form th:action="@{/join/{id}(id=${meeting.meetingId})}" method="post">
+                            <input type="submit" value="Join" />
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{/cancel/{id}(id=${meeting.meetingId})}" method="post">
+                            <input type="submit" value="Cancel" />
+                        </form>
+                    <td>
+                        <a th:if="${meeting.creator == currentUser}" 
+                           th:href="@{/editmeeting/{id}(id=${meeting.meetingId})}" class="btn btn-sm btn-warning">Edit</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" 
+                           th:href="@{/editmeeting/{id}(id=${meeting.meetingId})}" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
+                    <td>
+                        <a th:if="${meeting.creator == currentUser}" 
+                           th:href="@{/deletemeeting/{id}(id=${meeting.meetingId})}" class="btn btn-sm btn-danger">Delete</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" 
+                           th:href="@{/deletemeeting/{id}(id=${meeting.meetingId})}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                    </td>
                 </tr>
             </tbody>
         </table>

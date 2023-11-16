@@ -12,7 +12,7 @@
     <div>
         <h2>Create your meeting!</h2>
         <div>
-            <form th.object="${meeting}" th:action="@{/save}" method="post">
+            <form th:object="${meeting}" th:action="@{../savemeeting}" method="post">
                 <div>
                     <label for="title">Title</label>
                     <input type="text" th:field="*{title}" />
@@ -20,7 +20,7 @@
                 <div>
                     <label for="category">Category</label>
                     <select th:field="*{category}">
-                        <option th:each="category : ${categories}" th:value="${category.id}"
+                        <option th:each="category : ${categories}" th:value="${category.catId}"
                             th:text="${category.catName}"></option>
                     </select>
                 </div>
@@ -30,7 +30,7 @@
                 </div>
                 <div>
                     <label for="date">Date</label>
-                    <input type="date" th:field="*{date}" />
+                    <input placeholder="dd.mm.yyyy" type="date" id="date" name="date" required th:field="*{date}"/>
                 </div>
                 <div>
                     <label for="content">Content</label>
@@ -38,7 +38,7 @@
                 </div>
                 <div>
                     <input type="submit" value="Create" />
-                    <input type="button" onclick="location.href='/events';" value="Cancel" />
+                    <input type="button" onclick="location.href='/eventlist';" value="Cancel" />
                 </div>
         </div>
     </div>

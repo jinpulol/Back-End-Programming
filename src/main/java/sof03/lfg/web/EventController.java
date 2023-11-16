@@ -1,15 +1,29 @@
 package sof03.lfg.web;
 
+import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
+
+import javax.naming.Binding;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.validation.Valid;
 import sof03.lfg.domain.CategoryRepository;
 import sof03.lfg.domain.Meeting;
 import sof03.lfg.domain.MeetingRepository;
+import sof03.lfg.domain.User;
+import sof03.lfg.domain.UserRepository;
 
 // Controller for meetings
 @Controller
@@ -22,10 +36,25 @@ public class EventController {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     // Index page
     @GetMapping("/")
     public String index() {
         return "index";
+    }
+
+    // Login page
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    // Register page
+    @GetMapping("/register")
+    public String register() {
+        return "register";
     }
 
     // Show all meetings
@@ -46,9 +75,15 @@ public class EventController {
 
     // Save new meeting
     @PostMapping("/savemeeting")
-    public String saveMeeting(Meeting meeting) {
-        meetingRepository.save(meeting);
-        return "redirect:events";
+    public String saveMeeting(@Valid @ModelAttribute("meeting") Meeting meeting, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("meeting", meeting);
+            return "addmeeting";
+        } else {
+            meetingRepository.save(meeting);
+            return "redirect:events";
+        }
+
     }
 
     // Delete meeting
@@ -64,6 +99,40 @@ public class EventController {
         model.addAttribute("meeting", meetingRepository.findById(meetingId));
         model.addAttribute("categories", categoryRepository.findAll());
         return "editmeeting";
+    }
+
+
+    // Vaiheessa, attendees täytyy lisätä meetingiin...
+    // // Join meeting
+    // @PostMapping("/join/{id}")
+    // public String joinMeeting(@PathVariable("id") Long meetingId, Principal principal) {
+    //     Meeting meeting = meetingRepository.findById(meetingId)
+    //     User user = userRepository.findByUsername(principal.getName());
+    //     meeting.getAttendees().add(user);
+    //     meetingRepository.save(meeting);
+    //     return "redirect:/events";
+    // }
+
+    // // Cancel meeting
+    // @PostMapping("/cancel/{id}")
+    // public String cancelMeeting(@PathVariable("id") Long meetingId, Principal principal) {
+    //     Meeting meeting = meetingRepository.findById(meetingId)
+    //     User user = userRepository.findByUsername(principal.getName());
+    //     meeting.getAttendees().remove(user);
+    //     meetingRepository.save(meeting);
+    //     return "redirect:/events";
+    // }
+
+    // RESTful service to get all meetings
+    @RequestMapping(value = "/meetings", method = RequestMethod.GET)
+    public @ResponseBody List<Meeting> meetingListRest() {
+        return (List<Meeting>) meetingRepository.findAll();
+    }
+
+    // RESTful service to get meeting by id
+    @RequestMapping(value = "/meetings/{id}", method = RequestMethod.GET)
+    public @ResponseBody Optional<Meeting> findMeetingRest(@PathVariable("id") Long meetingId) {
+        return meetingRepository.findById(meetingId);
     }
 
 }

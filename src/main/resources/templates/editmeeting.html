@@ -31,7 +31,7 @@
                 </div>
                 <div>
                     <label for="date">Date</label>
-                    <input type="date" th:field="*{date}" />
+                    <input placeholder="dd.mm.yyyy" type="date" id="date" name="date" required th:field="*{date}"/>
                 </div>
                 <div>
                     <label for="content">Content</label>
@@ -39,6 +39,7 @@
                 </div>
                 <div>
                     <input type="submit" value="Save" />
+                    <input type="button" onclick="location.href='/events';" value="Cancel" />
                 </div>
         </div>
     </div>

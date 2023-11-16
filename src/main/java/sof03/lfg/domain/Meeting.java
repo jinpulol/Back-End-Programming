@@ -2,6 +2,7 @@ package sof03.lfg.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,8 +25,10 @@ public class Meeting {
     private Long meetingId;
     private String title;
     private String location;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
     private String content;
+    private String creator;
 
     @ManyToOne
     @JsonIgnoreProperties("meetings")
@@ -36,13 +39,14 @@ public class Meeting {
     public Meeting() {
     }
 
-    public Meeting(String title, String location, Date date, String content, Category category) {
+    public Meeting(String title, String location, Date date, String content, Category category, String creator) {
         super();
         this.title = title;
         this.location = location;
         this.date = date;
         this.content = content;
         this.category = category;
+        this.creator = creator;
     }
 
     // getters and setters
@@ -90,6 +94,14 @@ public class Meeting {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+	public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public Category getCategory() {

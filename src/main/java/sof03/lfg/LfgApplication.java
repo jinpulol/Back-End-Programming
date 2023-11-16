@@ -13,6 +13,8 @@ import sof03.lfg.domain.Category;
 import sof03.lfg.domain.CategoryRepository;
 import sof03.lfg.domain.Meeting;
 import sof03.lfg.domain.MeetingRepository;
+import sof03.lfg.domain.User;
+import sof03.lfg.domain.UserRepository;
 
 @SpringBootApplication
 public class LfgApplication { // LFG = Looking For Group
@@ -24,13 +26,26 @@ public class LfgApplication { // LFG = Looking For Group
 	}
 
 	@Bean
-	public CommandLineRunner meetingDemo(MeetingRepository meetingRepository, CategoryRepository categoryRepository) {
+	public CommandLineRunner meetingDemo(MeetingRepository meetingRepository, CategoryRepository categoryRepository, UserRepository userRepository) {
 
 		SimpleDateFormat time = new SimpleDateFormat("dd.MM.yyyy"); // date format
 
 		return (args) -> {
 
 			// Add your own examples here, for example:
+
+			// Adding a few users
+			log.info("Save a few users");
+			User user1 = new User("admin", "Olli", "Jokinen", 44, "$2a$10$26TIRHIYXikKZuz.g2cFwOUo5Hnr3KwC20Cvk4bFupP4a1LgHlt6S", "admin@lfg.app", "ADMIN");
+			User user2 = new User("Eikka", "Ensio", "Esimerkki", 23, "$2a$10$YSX8kwvWvhLb17M25KMyY.uv3ckqJMrdu01si604nWaxvy1xxpBjW", "eikka@testi.test", "USER");
+			User user3 = new User("tepatsu", "Teija", "Sukunimi", 32,"$2a$10$OZ8X71AqsVktyJoWBgI20uq4IfD4j7DDNqFwoOWmHNmVv.VwBjvsK", "tsukunimi@mail.mail", "USER");
+			User user4 = new User("koolkid123", "Mikko", "Mallikas", 19, "$2a$10$VKSlKUJbCRp//GI5xIqfj.UV1/RSTlzDprNtAmhv6xMm9POi2uXti", "koolkidroks@mail.mail", "USER");
+
+			userRepository.save(user1);
+			userRepository.save(user2);
+			userRepository.save(user3);
+			userRepository.save(user4);
+
 			// Adding a few categories
 			log.info("Save a few categories");
 			Category cat1 = new Category("Kulttuuri ja viihde");
@@ -45,14 +60,14 @@ public class LfgApplication { // LFG = Looking For Group
 
 			// Adding a few meetings
 			log.info("Save a few meetings");
-			Meeting meeting1 = new Meeting("Kävelyretki", "Espoo", time.parse("01.01.2024"), "Kävelyretki Nuuksiossa",
-					cat2);
-			Meeting meeting2 = new Meeting("Elokuvailta", "Helsinki", time.parse("04.02.2024"),
-					"Elokuvailta Tennispalatsissa", cat1);
-			Meeting meeting3 = new Meeting("Kahvittelua", "Jyväskylä", time.parse("05.03.2024"),
-					"Kahvia ja juttelua yliopiston kahvilassa", cat3);
-			Meeting meeting4 = new Meeting("Lautapelailua", "Tampere", time.parse("16.02.2024"),
-					"Dungeon & Dragons -peliä ja herkuttelua", cat4);
+			Meeting meeting1 = new Meeting("Kävelyretki", "Espoo", time.parse("19.1.2024"), "Kävelyretki Nuuksiossa",
+					cat2, "Eikka");
+			Meeting meeting2 = new Meeting("Elokuvailta", "Helsinki", time.parse("14.2.2024"),
+					"Elokuvailta Tennispalatsissa", cat1, "tepatsu");
+			Meeting meeting3 = new Meeting("Kahvittelua", "Jyväskylä", time.parse("1.3.2024"),
+					"Kahvia ja juttelua yliopiston kahvilassa", cat3, "koolkid123");
+			Meeting meeting4 = new Meeting("Lautapelailua", "Tampere", time.parse("20.4.2024"),
+					"Dungeon & Dragons -peliä ja herkuttelua", cat4, "Eikka");
 
 			meetingRepository.save(meeting1);
 			meetingRepository.save(meeting2);

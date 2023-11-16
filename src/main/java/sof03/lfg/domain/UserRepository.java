@@ -1,10 +1,8 @@
-// for later use
+package sof03.lfg.domain;
 
-// package sof03.lfg.domain;
+import org.springframework.data.repository.CrudRepository;
 
-// import org.springframework.data.repository.CrudRepository;
+public interface UserRepository extends CrudRepository<User, Long> {
+    User findByUserName(String userName);
 
-// public interface UserRepository extends CrudRepository<User, Long> {
-//     User findByUsername(String username);
-
-// }
+}
